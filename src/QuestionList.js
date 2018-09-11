@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 import classNames from 'classnames'
 
-import questions from './questions';
-
 class QuestionList extends Component {
 
-  state = {
-    selectedIndex: null
+  static defaultProps = {
+    onItemClick: () => {},
+    selectedItem: null,
+    items: []
   }
- 
-  _onQuestionClick = (selectedIndex) => this.setState(() => ({selectedIndex}))
 
   render() {
     return (
       <ul className="questionList">
-        {questions.map((question, idx) => {
-          const isSelected = this.state.selectedIndex === idx
+        {this.props.items.map((question, idx) => {
+          const isSelected = this.props.selectedItem === idx
           const questionItemCN = classNames('questionItem', {'questionItemSelected': isSelected})
           const questionNumberCN = classNames('questionNumber', {'questionNumberSelected': isSelected})
           return (
-            <li className={questionItemCN} key={question + idx} onClick={() => this._onQuestionClick(idx)}>
+            <li className={questionItemCN} key={question + idx} onClick={() => this.props.onItemClick(idx)}>
               <div className={questionNumberCN}>{idx + 1}</div>
               <div className="questionText">{question}</div>
             </li>
